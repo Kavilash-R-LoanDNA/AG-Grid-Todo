@@ -1,0 +1,47 @@
+.delete-btn , .show-btn, .add-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+ .ag-header-cell-label {
+  justify-content: center;
+}
+
+.ag-header{
+  background-color: #c0fff5;
+}
+ 
+
+ .ag-cell {
+  
+  border-left: 1px solid #ccc;
+}
+.ag-row {
+  border-bottom: 1px solid #ccc;
+}
+
+/* Make text vertically centered when row is taller */
+.ag-cell {
+  display: flex;
+  align-items: center;
+}
+
+.ag-theme-alpine, .container{
+    width: 100%;
+     
+}
+
+/* .show-btn{
+    background-color: #1890ff;
+} */
+
+.add-btn{
+    background-color: #4CAF50;
+}
+.delete-btn{
+    background-color: #ff4d4f;
+}
+
