@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { use, useEffect, useMemo, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import "./Home.css";
@@ -39,6 +39,8 @@ const Home = () => {
   {
     field: "isCompleted",
     headerName: "isCompleted?",
+    cellEditor: "agSelectCellEditor",
+    cellEditorParams: {values: ["yes", "no"] },
   },
   {
     headerName: "Action",
@@ -106,10 +108,30 @@ const Home = () => {
     ref.current.api.stopEditing();
     console.log(rowData);
   };
+
+  const [searchTxt,setSearchTxt] = useState("");
+
+  const filteredData = useMemo(() => {
+    if(!searchTxt) return rowData;
+    return rowData.filter((row) => {
+      return (
+        row.task.toLowerCase().includes(searchTxt.toLowerCase()) ||
+        row.isCompleted.toLowerCase().includes(searchTxt.toLowerCase())
+      );
+    });
+  }, [rowData, searchTxt]);
+
+  useEffect(() => {
+    console.log("filtered data", filteredData, "searchTxt", searchTxt);
+  }, [filteredData]);
+
+
   const onSearch = (e) => {
-    if (ref.current) {
-      ref.current.api.setGridOption("quickFilterText", e.target.value.trim());
-    }
+    // if (ref.current) {
+    //   ref.current.api.setGridOption("quickFilterText", e.target.value.trim());
+    // }
+    setSearchTxt(e.target.value.trim());
+
   };
 
   const onDelete = () => {
@@ -159,7 +181,7 @@ const Home = () => {
       >
         <AgGridReact
           ref={ref}
-          rowData={rowData}
+          rowData={filteredData}
           columnDefs={colDefData}
           defaultColDef={{
             flex: 1,
